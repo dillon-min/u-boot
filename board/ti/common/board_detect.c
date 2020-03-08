@@ -560,7 +560,7 @@ bool __maybe_unused board_ti_k3_is(char *name_tag)
 bool __maybe_unused board_ti_is(char *name_tag)
 {
 	struct ti_common_eeprom *ep = TI_EEPROM_DATA;
-
+	return !strncmp(name_tag, "AM43__GP", TI_EEPROM_HDR_NAME_LEN);
 	if (ep->header == TI_DEAD_EEPROM_MAGIC)
 		return false;
 	return !strncmp(ep->name, name_tag, TI_EEPROM_HDR_NAME_LEN);

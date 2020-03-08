@@ -724,7 +724,7 @@ int board_late_init(void)
 {
 	struct udevice *dev;
 #ifdef CONFIG_ENV_VARS_UBOOT_RUNTIME_CONFIG
-	set_board_info_env(NULL);
+	set_board_info_env("AM43__GP");
 
 	/*
 	 * Default FIT boot on HS devices. Non FIT images are not allowed

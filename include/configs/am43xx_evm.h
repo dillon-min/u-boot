@@ -8,6 +8,10 @@
 #ifndef __CONFIG_AM43XX_EVM_H
 #define __CONFIG_AM43XX_EVM_H
 
+#define CONFIG_HSMMC2_8BIT
+#define CONFIG_SUPPORT_EMMC_BOOT
+#define CONFIG_EMMC_BOOT
+
 #define CONFIG_MAX_RAM_BANK_SIZE	(1024 << 21)	/* 2GB */
 #define CONFIG_SYS_TIMERBASE		0x48040000	/* Use Timer2 */
 
@@ -117,7 +121,7 @@
 	DEFAULT_MMC_TI_ARGS \
 	DEFAULT_FIT_TI_ARGS \
 	"fdtfile=undefined\0" \
-	"bootpart=0:2\0" \
+	"bootpart=1:2\0" \
 	"bootdir=/boot\0" \
 	"bootfile=zImage\0" \
 	"console=ttyO0,115200n8\0" \

@@ -103,7 +103,19 @@ static struct module_pin_mux nand_pin_mux[] = {
 	{-1},
 };
 #endif
-
+static struct module_pin_mux emmc_pin_mux[] = {
+	{OFFSET(gpmc_csn1), (MODE(2) | PULLUDDIS | RXACTIVE)}, /* EMMC_CLK */
+	{OFFSET(gpmc_csn2), (MODE(2) | PULLUP_EN | RXACTIVE)}, /* EMMC_CMD */
+	{OFFSET(gpmc_ad8),  (MODE(2) | PULLUP_EN | RXACTIVE)}, /* EMMC_DAT0 */
+	{OFFSET(gpmc_ad9),  (MODE(2) | PULLUP_EN | RXACTIVE)}, /* EMMC_DAT1 */
+	{OFFSET(gpmc_ad10), (MODE(2) | PULLUP_EN | RXACTIVE)}, /* EMMC_DAT2 */
+	{OFFSET(gpmc_ad11), (MODE(2) | PULLUP_EN | RXACTIVE)}, /* EMMC_DAT3 */
+	{OFFSET(gpmc_ad12), (MODE(2) | PULLUP_EN | RXACTIVE)}, /* EMMC_DAT4 */
+	{OFFSET(gpmc_ad13), (MODE(2) | PULLUP_EN | RXACTIVE)}, /* EMMC_DAT5 */
+	{OFFSET(gpmc_ad14), (MODE(2) | PULLUP_EN | RXACTIVE)}, /* EMMC_DAT6 */
+	{OFFSET(gpmc_ad15), (MODE(2) | PULLUP_EN | RXACTIVE)}, /* EMMC_DAT7 */
+	{-1},
+};
 static __maybe_unused struct module_pin_mux qspi_pin_mux[] = {
 	{OFFSET(gpmc_csn0), (MODE(3) | PULLUP_EN | RXACTIVE)}, /* QSPI_CS0 */
 	{OFFSET(gpmc_csn3), (MODE(2) | PULLUP_EN | RXACTIVE)}, /* QSPI_CLK */
@@ -126,6 +138,7 @@ void enable_board_pin_mux(void)
 	configure_module_pin_mux(mdio_pin_mux);
 
 	if (board_is_evm()) {
+		configure_module_pin_mux(emmc_pin_mux);
 		configure_module_pin_mux(gpio5_7_pin_mux);
 		configure_module_pin_mux(rgmii1_pin_mux);
 #if defined(CONFIG_MTD_RAW_NAND)
