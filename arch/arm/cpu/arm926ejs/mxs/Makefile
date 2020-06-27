@@ -2,7 +2,7 @@
 #
 # (C) Copyright 2000-2006
 # Wolfgang Denk, DENX Software Engineering, wd@denx.de.
-
+ccflags-y += -DDEBUG
 extra-$(CONFIG_SPL_BUILD) := start.o
 
 obj-y	= clock.o mxs.o iomux.o timer.o

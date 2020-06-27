@@ -177,7 +177,17 @@ int print_cpuinfo(void)
 {
 	u32 cpurev;
 	struct mxs_spl_data *data = MXS_SPL_DATA;
+	int i;
+	uint8_t bootmode = 0;
 
+#define GLOBAL_BOOT_MODE_ADDR 0x00019BF0
+	bootmode = __raw_readl(GLOBAL_BOOT_MODE_ADDR);
+	for (i = 0; i < ARRAY_SIZE(mxs_boot_modes); i++) {
+		u8 masked = bootmode & mxs_boot_modes[i].boot_mask;
+		if (masked == mxs_boot_modes[i].boot_pads)
+			break;
+	}
+	data->boot_mode_idx = i;
 	cpurev = get_cpu_rev();
 	printf("CPU:   Freescale i.MX%s rev%d.%d at %d MHz\n",
 		get_imx_type((cpurev & 0xFF000) >> 12),
@@ -276,7 +286,7 @@ void imx_get_mac_from_fuse(int dev_id, unsigned char *mac)
 int mxs_dram_init(void)
 {
 	struct mxs_spl_data *data = MXS_SPL_DATA;
-
+	data->mem_dram_size = 64*1024*1024;
 	if (data->mem_dram_size == 0) {
 		printf("MXS:\n"
 			"Error, the RAM size passed up from SPL is 0!\n");
