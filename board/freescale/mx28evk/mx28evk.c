@@ -80,13 +80,13 @@ static int mx28evk_mmc_wp(int id)
 		return 1;
 	}
 
-	return gpio_get_value(MX28_PAD_SSP1_SCK__GPIO_2_12);
+	return gpio_get_value(MX28_PAD_GPMI_CE1N__GPIO_0_17);
 }
 
 int board_mmc_init(bd_t *bis)
 {
 	/* Configure WP as input */
-	gpio_direction_input(MX28_PAD_SSP1_SCK__GPIO_2_12);
+	gpio_direction_input(MX28_PAD_GPMI_CE1N__GPIO_0_17);
 
 	/* Configure MMC0 Power Enable */
 	gpio_direction_output(MX28_PAD_PWM3__GPIO_3_28, 0);
