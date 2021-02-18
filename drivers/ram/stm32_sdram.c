@@ -268,6 +268,7 @@ static int stm32_fmc_of_to_plat(struct udevice *dev)
 	u32 swp_fmc;
 	ofnode bank_node;
 	char *bank_name;
+	char _bank_name[128] = {0};
 	u8 bank = 0;
 	int ret;
 
@@ -299,17 +300,19 @@ static int stm32_fmc_of_to_plat(struct udevice *dev)
 
 	dev_for_each_subnode(bank_node, dev) {
 		/* extract the bank index from DT */
-		bank_name = (char *)ofnode_get_name(bank_node);
+	    	bank_name = (char *)ofnode_get_name(bank_node);
+		strcpy(_bank_name, bank_name);
+		bank_name = _bank_name;
 		strsep(&bank_name, "@");
 		if (!bank_name) {
 			pr_err("missing sdram bank index");
 			return -EINVAL;
 		}
-
+		
 		bank_params = &params->bank_params[bank];
 		strict_strtoul(bank_name, 10,
 			       (long unsigned int *)&bank_params->target_bank);
-
+		
 		if (bank_params->target_bank >= MAX_SDRAM_BANK) {
 			pr_err("Found bank %d , but only bank 0 and 1 are supported",
 			      bank_params->target_bank);
