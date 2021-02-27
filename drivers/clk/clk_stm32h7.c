@@ -335,8 +335,8 @@ struct pll_psc {
  * pll1_p = 250MHz / pll1_q = 250MHz pll1_r = 250Mhz
  */
 struct pll_psc sys_pll_psc = {
-	.divm = 4,
-	.divn = 80,
+	.divm = 5,
+	.divn = 192,
 	.divp = 2,
 	.divq = 2,
 	.divr = 2,
@@ -425,7 +425,7 @@ int configure_clocks(struct udevice *dev)
 
 	/* sdram: use pll1_q as fmc_k clk */
 	clrsetbits_le32(&regs->d1ccipr, RCC_D1CCIPR_FMCSRC_MASK,
-			FMCSRC_PLL1_Q_CK);
+			FMCSRC_PLL2_R_CK);
 
 	return 0;
 }
