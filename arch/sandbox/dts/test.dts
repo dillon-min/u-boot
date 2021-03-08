@@ -2,6 +2,7 @@
 
 #include <dt-bindings/gpio/gpio.h>
 #include <dt-bindings/gpio/sandbox-gpio.h>
+#include <dt-bindings/input/input.h>
 #include <dt-bindings/pinctrl/sandbox-pinmux.h>
 #include <dt-bindings/mux/mux.h>
 
@@ -66,6 +67,30 @@
 		btn2 {
 			gpios = <&gpio_a 4 0>;
 			label = "button2";
+		};
+	};
+
+	buttons2 {
+		compatible = "adc-keys";
+		io-channels = <&adc 3>;
+		keyup-threshold-microvolt = <3000000>;
+
+		button-up {
+			label = "button3";
+			linux,code = <KEY_F3>;
+			press-threshold-microvolt = <1500000>;
+		};
+
+		button-down {
+			label = "button4";
+			linux,code = <KEY_F4>;
+			press-threshold-microvolt = <1000000>;
+		};
+
+		button-enter {
+			label = "button5";
+			linux,code = <KEY_F5>;
+			press-threshold-microvolt = <500000>;
 		};
 	};
 
@@ -350,6 +375,27 @@
 		test5-gpios = <&gpio_a 19>;
 	};
 
+	mmio-bus@0 {
+		#address-cells = <1>;
+		#size-cells = <1>;
+		compatible = "denx,u-boot-test-bus";
+		dma-ranges = <0x10000000 0x00000000 0x00040000>;
+
+		subnode@0 {
+			compatible = "denx,u-boot-fdt-test";
+		};
+	};
+
+	mmio-bus@1 {
+		#address-cells = <1>;
+		#size-cells = <1>;
+		compatible = "denx,u-boot-test-bus";
+
+		subnode@0 {
+			compatible = "denx,u-boot-fdt-test";
+		};
+	};
+
 	acpi_test1: acpi-test {
 		compatible = "denx,u-boot-acpi-test";
 		acpi-ssdt-test-data = "ab";
@@ -587,8 +633,9 @@
 		i2c-eeprom = <&bootcount_i2c>;
 	};
 
-	adc@0 {
+	adc: adc@0 {
 		compatible = "sandbox,adc";
+		#io-channel-cells = <1>;
 		vdd-supply = <&buck2>;
 		vss-microvolts = <0>;
 	};

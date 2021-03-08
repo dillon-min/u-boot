@@ -59,7 +59,8 @@ int spl_start_uboot(void)
 {
 	debug("SPL: booting kernel\n");
 	/* break into full u-boot on 'c' */
-	return serial_tstc() && serial_getc() == 'c';
+	return 1;
+	//return serial_tstc() && serial_getc() == 'c';
 }
 #endif
 

@@ -300,7 +300,7 @@ static int stm32_fmc_of_to_plat(struct udevice *dev)
 
 	dev_for_each_subnode(bank_node, dev) {
 		/* extract the bank index from DT */
-	    	bank_name = (char *)ofnode_get_name(bank_node);
+		bank_name = (char *)ofnode_get_name(bank_node);
 		strcpy(_bank_name, bank_name);
 		bank_name = _bank_name;
 		strsep(&bank_name, "@");

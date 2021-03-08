@@ -6,6 +6,7 @@ Use U-Boot
 
    fdt_overlays
    netconsole
+   partitions
 
 Shell commands
 --------------
@@ -15,6 +16,7 @@ Shell commands
 
    base
    bootefi
+   booti
    bootmenu
    button
    conitrace
@@ -27,5 +29,6 @@ Shell commands
    loady
    mbr
    pstore
+   qfw
    sbi
    true

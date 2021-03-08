@@ -48,7 +48,7 @@
 							     MWIDTH_16
 							     BANKS_4
 							     CAS_2
-							     SDCLK_2
+							     SDCLK_3
 							     RD_BURST_EN
 							     RD_PIPE_DL_0>;
 				st,sdram-timing = /bits/ 8 <TMRD_2
@@ -58,7 +58,7 @@
 							    TRP_2
 							    TWR_2
 							    TRCD_2>;
-				st,sdram-refcount = < 677 >;
+				st,sdram-refcount = <677>;
 			};
 		};
 	};
@@ -180,10 +180,9 @@
 				 <STM32_PINMUX('G',15, AF12)>,
 
 				 <STM32_PINMUX('H', 5, AF12)>,
-
 				 <STM32_PINMUX('C', 2, AF12)>,
 				 <STM32_PINMUX('C', 3, AF12)>;
-
+			
 			slew-rate = <3>;
 		};
 	};
