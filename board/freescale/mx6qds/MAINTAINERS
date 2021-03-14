@@ -1,0 +1,6 @@
+MX6QDS BOARD
+M:	Dillon Min <dillon.minfei@gmail.com>
+S:	Maintained
+F:	board/freescale/mx6qds/
+F:	include/configs/mx6qds.h
+F:	configs/mx6qds_defconfig

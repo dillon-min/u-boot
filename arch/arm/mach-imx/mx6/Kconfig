@@ -376,6 +376,16 @@ config TARGET_MX6SABRESD
 	select SUPPORT_SPL
 	imply CMD_DM
 
+config TARGET_MX6QDS
+	bool "mx6QDS"
+	depends on MX6QDL
+	select BOARD_EARLY_INIT_F
+	select BOARD_LATE_INIT
+	select DM
+	select DM_THERMAL
+	select SUPPORT_SPL
+	imply CMD_DM
+
 config TARGET_MX6SLEVK
 	bool "mx6slevk"
 	depends on MX6SL
@@ -720,6 +730,7 @@ source "board/freescale/mx6qarm2/Kconfig"
 source "board/freescale/mx6memcal/Kconfig"
 source "board/freescale/mx6sabreauto/Kconfig"
 source "board/freescale/mx6sabresd/Kconfig"
+source "board/freescale/mx6qds/Kconfig"
 source "board/freescale/mx6slevk/Kconfig"
 source "board/freescale/mx6sllevk/Kconfig"
 source "board/freescale/mx6sxsabresd/Kconfig"
