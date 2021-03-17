@@ -57,8 +57,6 @@ DECLARE_GLOBAL_DATA_PTR;
 
 #define I2C_PAD MUX_PAD_CTRL(I2C_PAD_CTRL)
 
-#define DISP0_PWR_EN	IMX_GPIO_NR(1, 21)
-
 #define KEY_VOL_UP	IMX_GPIO_NR(1, 4)
 
 int dram_init(void)
@@ -77,6 +75,16 @@ static iomux_v3_cfg_t const uart1_pads[] = {
 	IOMUX_PADS(PAD_CSI0_DAT11__UART1_RX_DATA | MUX_PAD_CTRL(UART_PAD_CTRL)),
 };
 
+static iomux_v3_cfg_t const usdhc1_pads[] = {
+	IOMUX_PADS(PAD_SD1_CLK__SD1_CLK	| MUX_PAD_CTRL(USDHC_PAD_CTRL)),
+	IOMUX_PADS(PAD_SD1_CMD__SD1_CMD	| MUX_PAD_CTRL(USDHC_PAD_CTRL)),
+	IOMUX_PADS(PAD_SD1_DAT0__SD1_DATA0	| MUX_PAD_CTRL(USDHC_PAD_CTRL)),
+	IOMUX_PADS(PAD_SD1_DAT1__SD1_DATA1	| MUX_PAD_CTRL(USDHC_PAD_CTRL)),
+	IOMUX_PADS(PAD_SD1_DAT2__SD1_DATA2	| MUX_PAD_CTRL(USDHC_PAD_CTRL)),
+	IOMUX_PADS(PAD_SD1_DAT3__SD1_DATA3	| MUX_PAD_CTRL(USDHC_PAD_CTRL)),
+	IOMUX_PADS(PAD_ENET_TX_EN__GPIO1_IO28	| MUX_PAD_CTRL(NO_PAD_CTRL)), /* CD */
+};
+
 static iomux_v3_cfg_t const usdhc2_pads[] = {
 	IOMUX_PADS(PAD_SD2_CLK__SD2_CLK	| MUX_PAD_CTRL(USDHC_PAD_CTRL)),
 	IOMUX_PADS(PAD_SD2_CMD__SD2_CMD	| MUX_PAD_CTRL(USDHC_PAD_CTRL)),
@@ -84,11 +92,7 @@ static iomux_v3_cfg_t const usdhc2_pads[] = {
 	IOMUX_PADS(PAD_SD2_DAT1__SD2_DATA1	| MUX_PAD_CTRL(USDHC_PAD_CTRL)),
 	IOMUX_PADS(PAD_SD2_DAT2__SD2_DATA2	| MUX_PAD_CTRL(USDHC_PAD_CTRL)),
 	IOMUX_PADS(PAD_SD2_DAT3__SD2_DATA3	| MUX_PAD_CTRL(USDHC_PAD_CTRL)),
-	IOMUX_PADS(PAD_NANDF_D4__SD2_DATA4	| MUX_PAD_CTRL(USDHC_PAD_CTRL)),
-	IOMUX_PADS(PAD_NANDF_D5__SD2_DATA5	| MUX_PAD_CTRL(USDHC_PAD_CTRL)),
-	IOMUX_PADS(PAD_NANDF_D6__SD2_DATA6	| MUX_PAD_CTRL(USDHC_PAD_CTRL)),
-	IOMUX_PADS(PAD_NANDF_D7__SD2_DATA7	| MUX_PAD_CTRL(USDHC_PAD_CTRL)),
-	IOMUX_PADS(PAD_NANDF_D2__GPIO2_IO02	| MUX_PAD_CTRL(NO_PAD_CTRL)), /* CD */
+	IOMUX_PADS(PAD_DISP0_DAT12__GPIO5_IO06	| MUX_PAD_CTRL(NO_PAD_CTRL)), /* CD */
 };
 
 static iomux_v3_cfg_t const usdhc3_pads[] = {
@@ -102,7 +106,6 @@ static iomux_v3_cfg_t const usdhc3_pads[] = {
 	IOMUX_PADS(PAD_SD3_DAT5__SD3_DATA5 | MUX_PAD_CTRL(USDHC_PAD_CTRL)),
 	IOMUX_PADS(PAD_SD3_DAT6__SD3_DATA6 | MUX_PAD_CTRL(USDHC_PAD_CTRL)),
 	IOMUX_PADS(PAD_SD3_DAT7__SD3_DATA7 | MUX_PAD_CTRL(USDHC_PAD_CTRL)),
-	IOMUX_PADS(PAD_NANDF_D0__GPIO2_IO00    | MUX_PAD_CTRL(NO_PAD_CTRL)), /* CD */
 };
 
 static iomux_v3_cfg_t const usdhc4_pads[] = {
@@ -119,76 +122,35 @@ static iomux_v3_cfg_t const usdhc4_pads[] = {
 };
 
 static iomux_v3_cfg_t const ecspi1_pads[] = {
-	IOMUX_PADS(PAD_KEY_COL0__ECSPI1_SCLK | MUX_PAD_CTRL(SPI_PAD_CTRL)),
-	IOMUX_PADS(PAD_KEY_COL1__ECSPI1_MISO | MUX_PAD_CTRL(SPI_PAD_CTRL)),
-	IOMUX_PADS(PAD_KEY_ROW0__ECSPI1_MOSI | MUX_PAD_CTRL(SPI_PAD_CTRL)),
+	IOMUX_PADS(PAD_EIM_D16__ECSPI1_SCLK | MUX_PAD_CTRL(SPI_PAD_CTRL)),
+	IOMUX_PADS(PAD_EIM_D17__ECSPI1_MISO | MUX_PAD_CTRL(SPI_PAD_CTRL)),
+	IOMUX_PADS(PAD_EIM_D18__ECSPI1_MOSI | MUX_PAD_CTRL(SPI_PAD_CTRL)),
 	IOMUX_PADS(PAD_KEY_ROW1__GPIO4_IO09 | MUX_PAD_CTRL(NO_PAD_CTRL)),
 };
 
-static iomux_v3_cfg_t const rgb_pads[] = {
-	IOMUX_PADS(PAD_DI0_DISP_CLK__IPU1_DI0_DISP_CLK | MUX_PAD_CTRL(NO_PAD_CTRL)),
-	IOMUX_PADS(PAD_DI0_PIN15__IPU1_DI0_PIN15 | MUX_PAD_CTRL(NO_PAD_CTRL)),
-	IOMUX_PADS(PAD_DI0_PIN2__IPU1_DI0_PIN02 | MUX_PAD_CTRL(NO_PAD_CTRL)),
-	IOMUX_PADS(PAD_DI0_PIN3__IPU1_DI0_PIN03 | MUX_PAD_CTRL(NO_PAD_CTRL)),
-	IOMUX_PADS(PAD_DI0_PIN4__IPU1_DI0_PIN04 | MUX_PAD_CTRL(NO_PAD_CTRL)),
-	IOMUX_PADS(PAD_DISP0_DAT0__IPU1_DISP0_DATA00 | MUX_PAD_CTRL(NO_PAD_CTRL)),
-	IOMUX_PADS(PAD_DISP0_DAT1__IPU1_DISP0_DATA01 | MUX_PAD_CTRL(NO_PAD_CTRL)),
-	IOMUX_PADS(PAD_DISP0_DAT2__IPU1_DISP0_DATA02 | MUX_PAD_CTRL(NO_PAD_CTRL)),
-	IOMUX_PADS(PAD_DISP0_DAT3__IPU1_DISP0_DATA03 | MUX_PAD_CTRL(NO_PAD_CTRL)),
-	IOMUX_PADS(PAD_DISP0_DAT4__IPU1_DISP0_DATA04 | MUX_PAD_CTRL(NO_PAD_CTRL)),
-	IOMUX_PADS(PAD_DISP0_DAT5__IPU1_DISP0_DATA05 | MUX_PAD_CTRL(NO_PAD_CTRL)),
-	IOMUX_PADS(PAD_DISP0_DAT6__IPU1_DISP0_DATA06 | MUX_PAD_CTRL(NO_PAD_CTRL)),
-	IOMUX_PADS(PAD_DISP0_DAT7__IPU1_DISP0_DATA07 | MUX_PAD_CTRL(NO_PAD_CTRL)),
-	IOMUX_PADS(PAD_DISP0_DAT8__IPU1_DISP0_DATA08 | MUX_PAD_CTRL(NO_PAD_CTRL)),
-	IOMUX_PADS(PAD_DISP0_DAT9__IPU1_DISP0_DATA09 | MUX_PAD_CTRL(NO_PAD_CTRL)),
-	IOMUX_PADS(PAD_DISP0_DAT10__IPU1_DISP0_DATA10 | MUX_PAD_CTRL(NO_PAD_CTRL)),
-	IOMUX_PADS(PAD_DISP0_DAT11__IPU1_DISP0_DATA11 | MUX_PAD_CTRL(NO_PAD_CTRL)),
-	IOMUX_PADS(PAD_DISP0_DAT12__IPU1_DISP0_DATA12 | MUX_PAD_CTRL(NO_PAD_CTRL)),
-	IOMUX_PADS(PAD_DISP0_DAT13__IPU1_DISP0_DATA13 | MUX_PAD_CTRL(NO_PAD_CTRL)),
-	IOMUX_PADS(PAD_DISP0_DAT14__IPU1_DISP0_DATA14 | MUX_PAD_CTRL(NO_PAD_CTRL)),
-	IOMUX_PADS(PAD_DISP0_DAT15__IPU1_DISP0_DATA15 | MUX_PAD_CTRL(NO_PAD_CTRL)),
-	IOMUX_PADS(PAD_DISP0_DAT16__IPU1_DISP0_DATA16 | MUX_PAD_CTRL(NO_PAD_CTRL)),
-	IOMUX_PADS(PAD_DISP0_DAT17__IPU1_DISP0_DATA17 | MUX_PAD_CTRL(NO_PAD_CTRL)),
-	IOMUX_PADS(PAD_DISP0_DAT18__IPU1_DISP0_DATA18 | MUX_PAD_CTRL(NO_PAD_CTRL)),
-	IOMUX_PADS(PAD_DISP0_DAT19__IPU1_DISP0_DATA19 | MUX_PAD_CTRL(NO_PAD_CTRL)),
-	IOMUX_PADS(PAD_DISP0_DAT20__IPU1_DISP0_DATA20 | MUX_PAD_CTRL(NO_PAD_CTRL)),
-	IOMUX_PADS(PAD_DISP0_DAT21__IPU1_DISP0_DATA21 | MUX_PAD_CTRL(NO_PAD_CTRL)),
-	IOMUX_PADS(PAD_DISP0_DAT22__IPU1_DISP0_DATA22 | MUX_PAD_CTRL(NO_PAD_CTRL)),
-	IOMUX_PADS(PAD_DISP0_DAT23__IPU1_DISP0_DATA23 | MUX_PAD_CTRL(NO_PAD_CTRL)),
-};
-
-static iomux_v3_cfg_t const bl_pads[] = {
-	IOMUX_PADS(PAD_SD1_DAT3__GPIO1_IO21 | MUX_PAD_CTRL(NO_PAD_CTRL)),
-};
-
-static void enable_backlight(void)
-{
-	SETUP_IOMUX_PADS(bl_pads);
-	gpio_request(DISP0_PWR_EN, "Display Power Enable");
-	gpio_direction_output(DISP0_PWR_EN, 1);
-}
-
-static void enable_rgb(struct display_info_t const *dev)
-{
-	SETUP_IOMUX_PADS(rgb_pads);
-	enable_backlight();
-}
-
-static void enable_lvds(struct display_info_t const *dev)
-{
-	enable_backlight();
-}
-
 static struct i2c_pads_info mx6q_i2c_pad_info1 = {
 	.scl = {
-		.i2c_mode = MX6Q_PAD_KEY_COL3__I2C2_SCL | I2C_PAD,
-		.gpio_mode = MX6Q_PAD_KEY_COL3__GPIO4_IO12 | I2C_PAD,
-		.gp = IMX_GPIO_NR(4, 12)
+		.i2c_mode = MX6Q_PAD_EIM_EB2__I2C2_SCL | I2C_PAD,
+		.gpio_mode = MX6Q_PAD_EIM_EB2__GPIO2_IO30 | I2C_PAD,
+		.gp = IMX_GPIO_NR(2, 30)
 	},
 	.sda = {
 		.i2c_mode = MX6Q_PAD_KEY_ROW3__I2C2_SDA | I2C_PAD,
 		.gpio_mode = MX6Q_PAD_KEY_ROW3__GPIO4_IO13 | I2C_PAD,
 		.gp = IMX_GPIO_NR(4, 13)
+	}
+};
+
+static struct i2c_pads_info mx6q_i2c_pad_info2 = {
+	.scl = {
+		.i2c_mode = MX6Q_PAD_GPIO_3__I2C3_SCL | I2C_PAD,
+		.gpio_mode = MX6Q_PAD_GPIO_3__GPIO1_IO03 | I2C_PAD,
+		.gp = IMX_GPIO_NR(1, 3)
+	},
+	.sda = {
+		.i2c_mode = MX6Q_PAD_GPIO_6__I2C3_SDA | I2C_PAD,
+		.gpio_mode = MX6Q_PAD_GPIO_6__GPIO1_IO06 | I2C_PAD,
+		.gp = IMX_GPIO_NR(1, 6)
 	}
 };
 
@@ -222,18 +184,19 @@ static void setup_iomux_uart(void)
 }
 
 #ifdef CONFIG_FSL_ESDHC_IMX
-struct fsl_esdhc_cfg usdhc_cfg[3] = {
+struct fsl_esdhc_cfg usdhc_cfg[4] = {
+	{USDHC1_BASE_ADDR},
 	{USDHC2_BASE_ADDR},
 	{USDHC3_BASE_ADDR},
 	{USDHC4_BASE_ADDR},
 };
 
+#define USDHC1_CD_GPIO	IMX_GPIO_NR(1, 28)
 #define USDHC2_CD_GPIO	IMX_GPIO_NR(2, 2)
-#define USDHC3_CD_GPIO	IMX_GPIO_NR(2, 0)
 
 int board_mmc_get_env_dev(int devno)
 {
-	return devno - 1;
+	return 2;
 }
 
 int board_mmc_getcd(struct mmc *mmc)
@@ -242,14 +205,14 @@ int board_mmc_getcd(struct mmc *mmc)
 	int ret = 0;
 
 	switch (cfg->esdhc_base) {
+	case USDHC1_BASE_ADDR:
+		ret = !gpio_get_value(USDHC1_CD_GPIO);
+		break;
 	case USDHC2_BASE_ADDR:
 		ret = !gpio_get_value(USDHC2_CD_GPIO);
 		break;
 	case USDHC3_BASE_ADDR:
-		ret = !gpio_get_value(USDHC3_CD_GPIO);
-		break;
-	case USDHC4_BASE_ADDR:
-		ret = 1; /* eMMC/uSDHC4 is always present */
+		ret = 1; /* eMMC/uSDHC3 is always present */
 		break;
 	}
 
@@ -264,12 +227,19 @@ int board_mmc_init(struct bd_info *bis)
 	 * Upon reading BOOT_CFG register the following map is done:
 	 * Bit 11 and 12 of BOOT_CFG register can determine the current
 	 * mmc port
-	 * 0x1                  SD1
-	 * 0x2                  SD2
+	 * 0x0                  SD1
+	 * 0x1                  SD2
+	 * 0x2                  SD3
 	 * 0x3                  SD4
 	 */
 
 	switch (reg & 0x3) {
+	case 0x0:
+		SETUP_IOMUX_PADS(usdhc1_pads);
+		usdhc_cfg[0].esdhc_base = USDHC1_BASE_ADDR;
+		usdhc_cfg[0].sdhc_clk = mxc_get_clock(MXC_ESDHC_CLK);
+		gd->arch.sdhc_clk = usdhc_cfg[0].sdhc_clk;
+		break;
 	case 0x1:
 		SETUP_IOMUX_PADS(usdhc2_pads);
 		usdhc_cfg[0].esdhc_base = USDHC2_BASE_ADDR;
@@ -307,13 +277,18 @@ static int ar8031_phy_fixup(struct phy_device *phydev)
 	val &= 0xffe3;
 	val |= 0x18;
 	phy_write(phydev, MDIO_DEVAD_NONE, 0xe, val);
-
+	
 	/* introduce tx clock delay */
 	phy_write(phydev, MDIO_DEVAD_NONE, 0x1d, 0x5);
 	val = phy_read(phydev, MDIO_DEVAD_NONE, 0x1e);
 	val |= 0x0100;
 	phy_write(phydev, MDIO_DEVAD_NONE, 0x1e, val);
 
+	return 0;
+	phy_write(phydev, MDIO_DEVAD_NONE, 0x1d, 0x0);
+	val = phy_read(phydev, MDIO_DEVAD_NONE, 0x1e);
+	val |= 0x8000;
+	phy_write(phydev, MDIO_DEVAD_NONE, 0x1e, val);
 	return 0;
 }
 
@@ -346,27 +321,8 @@ static void do_enable_hdmi(struct display_info_t const *dev)
 	imx_enable_hdmi_phy();
 }
 
-struct display_info_t const displays[] = {{
-	.bus	= -1,
-	.addr	= 0,
-	.pixfmt	= IPU_PIX_FMT_RGB666,
-	.detect	= NULL,
-	.enable	= enable_lvds,
-	.mode	= {
-		.name           = "Hannstar-XGA",
-		.refresh        = 60,
-		.xres           = 1024,
-		.yres           = 768,
-		.pixclock       = 15384,
-		.left_margin    = 160,
-		.right_margin   = 24,
-		.upper_margin   = 29,
-		.lower_margin   = 3,
-		.hsync_len      = 136,
-		.vsync_len      = 6,
-		.sync           = FB_SYNC_EXT,
-		.vmode          = FB_VMODE_NONINTERLACED
-} }, {
+struct display_info_t const displays[] = {
+	{
 	.bus	= -1,
 	.addr	= 0,
 	.pixfmt	= IPU_PIX_FMT_RGB24,
@@ -386,27 +342,9 @@ struct display_info_t const displays[] = {{
 		.vsync_len      = 6,
 		.sync           = FB_SYNC_EXT,
 		.vmode          = FB_VMODE_NONINTERLACED
-} }, {
-	.bus	= 0,
-	.addr	= 0,
-	.pixfmt	= IPU_PIX_FMT_RGB24,
-	.detect	= NULL,
-	.enable	= enable_rgb,
-	.mode	= {
-		.name           = "SEIKO-WVGA",
-		.refresh        = 60,
-		.xres           = 800,
-		.yres           = 480,
-		.pixclock       = 29850,
-		.left_margin    = 89,
-		.right_margin   = 164,
-		.upper_margin   = 23,
-		.lower_margin   = 10,
-		.hsync_len      = 10,
-		.vsync_len      = 10,
-		.sync           = 0,
-		.vmode          = FB_VMODE_NONINTERLACED
-} } };
+		}
+	}
+};
 size_t display_count = ARRAY_SIZE(displays);
 
 static void setup_display(void)
@@ -500,9 +438,10 @@ int board_init(void)
 #ifdef CONFIG_MXC_SPI
 	setup_spi();
 #endif
-	if (is_mx6dq() || is_mx6dqp())
+	if (is_mx6dq() || is_mx6dqp()) {
 		setup_i2c(1, CONFIG_SYS_I2C_SPEED, 0x7f, &mx6q_i2c_pad_info1);
-	else
+		setup_i2c(2, CONFIG_SYS_I2C_SPEED, 0x7f, &mx6q_i2c_pad_info2);
+	} else
 		setup_i2c(1, CONFIG_SYS_I2C_SPEED, 0x7f, &mx6dl_i2c_pad_info1);
 #if defined(CONFIG_VIDEO_IPUV3)
 	setup_display();
@@ -553,6 +492,7 @@ int board_spi_cs_gpio(unsigned bus, unsigned cs)
 #ifdef CONFIG_CMD_BMODE
 static const struct boot_mode board_boot_modes[] = {
 	/* 4 bit bus width */
+	{"sd1",	 MAKE_CFGVAL(0x40, 0x26, 0x00, 0x00)},
 	{"sd2",	 MAKE_CFGVAL(0x40, 0x28, 0x00, 0x00)},
 	{"sd3",	 MAKE_CFGVAL(0x40, 0x30, 0x00, 0x00)},
 	/* 8 bit bus width */
@@ -568,7 +508,7 @@ int board_late_init(void)
 #endif
 
 #ifdef CONFIG_ENV_VARS_UBOOT_RUNTIME_CONFIG
-	env_set("board_name", "SABRESD");
+	env_set("board_name", "DS");
 
 	if (is_mx6dqp())
 		env_set("board_rev", "MX6QP");
@@ -624,44 +564,44 @@ static int mx6q_dcd_table[] = {
 	0x020e05a0, 0x00000030,
 	0x020e078c, 0x00000030,
 	0x020e0750, 0x00020000,
-	0x020e05a8, 0x00000030, /* ? */
-	0x020e05b0, 0x00000030,
-	0x020e0524, 0x00000030,
-	0x020e051c, 0x00000030,
-	0x020e0518, 0x00000030,
-	0x020e050c, 0x00000030,
-	0x020e05b8, 0x00000030,
-	0x020e05c0, 0x00000030,
+	0x020e05a8, 0x00000028, /* ? 0x00000028 0x00000030*/
+	0x020e05b0, 0x00000028,
+	0x020e0524, 0x00000028,
+	0x020e051c, 0x00000028,
+	0x020e0518, 0x00000028,
+	0x020e050c, 0x00000028,
+	0x020e05b8, 0x00000028,
+	0x020e05c0, 0x00000028,
 	0x020e0774, 0x00020000,
-	0x020e0784, 0x00000030,
-	0x020e0788, 0x00000030,
-	0x020e0794, 0x00000030,
-	0x020e079c, 0x00000030,
-	0x020e07a0, 0x00000030,
-	0x020e07a4, 0x00000030,
-	0x020e07a8, 0x00000030,
-	0x020e0748, 0x00000030,
-	0x020e05ac, 0x00000030,
-	0x020e05b4, 0x00000030,
-	0x020e0528, 0x00000030,
-	0x020e0520, 0x00000030,
-	0x020e0514, 0x00000030,
-	0x020e0510, 0x00000030,
-	0x020e05bc, 0x00000030,
-	0x020e05c4, 0x00000030,
+	0x020e0784, 0x00000028,
+	0x020e0788, 0x00000028, /* ? 0x00000028 0x00000030*/
+	0x020e0794, 0x00000028,
+	0x020e079c, 0x00000028,
+	0x020e07a0, 0x00000028,
+	0x020e07a4, 0x00000028,
+	0x020e07a8, 0x00000028,
+	0x020e0748, 0x00000028,
+	0x020e05ac, 0x00000028,
+	0x020e05b4, 0x00000028,
+	0x020e0528, 0x00000028,
+	0x020e0520, 0x00000028,
+	0x020e0514, 0x00000028,
+	0x020e0510, 0x00000028,
+	0x020e05bc, 0x00000028,
+	0x020e05c4, 0x00000028,
 	0x021b0800, 0xa1390003,
 	0x021b080c, 0x001F001F,
 	0x021b0810, 0x001F001F,
 	0x021b480c, 0x001F001F,
 	0x021b4810, 0x001F001F,
-	0x021b083c, 0x43270338, //0x43260335
-	0x021b0840, 0x03200314, //0x031A030B
-	0x021b483c, 0x431A032F, //0x4323033B
-	0x021b4840, 0x03200263, //0x0323026F
-	0x021b0848, 0x4B434748, //0x483D4545
-	0x021b4848, 0x4445404C, //0x44433e48
-	0x021b0850, 0x38444542, //0x41444840
-	0x021b4850, 0x4935493A, //0x4835483e
+	0x021b083c, 0x43260335, // 0x43260335 0x43270338
+	0x021b0840, 0x031A030B, // 0x031A030B 0x03200314
+	0x021b483c, 0x4323033B, // 0x4323033B 0x431A032F
+	0x021b4840, 0x0323026F, // 0x0323026F 0x03200263
+	0x021b0848, 0x483D4545, // 0x483D4545 0x4B434748
+	0x021b4848, 0x44433e48, // 0x44433e48 0x4445404C
+	0x021b0850, 0x41444840, // 0x41444840 0x38444542
+	0x021b4850, 0x4835483e, // 0x4835483e 0x4935493A
 	0x021b081c, 0x33333333,
 	0x021b0820, 0x33333333,
 	0x021b0824, 0x33333333,
@@ -674,15 +614,15 @@ static int mx6q_dcd_table[] = {
 	0x021b48b8, 0x00000800,
 	0x021b0004, 0x00020036,
 	0x021b0008, 0x09444040,
-	0x021b000c, 0x555A7975, //0x8a8f7955
-	0x021b0010, 0xFF538F64, //0xff328f64
+	0x021b000c, 0x8a8f7955, // 0x8a8f7955 0x555A7975
+	0x021b0010, 0xff328f64, // 0xff328f64 0xFF538F64
 	0x021b0014, 0x01FF00DB,
 	0x021b0018, 0x00001740,
 	0x021b001c, 0x00008000,
 	0x021b002c, 0x000026d2,
-	0x021b0030, 0x005A1023, //0x8f1023
-	0x021b0040, 0x00000027, //0x47
-	0x021b0000, 0x831A0000, /* 0x841a0000 */
+	0x021b0030, 0x008f1023, // 0x008f1023 0x005A1023
+	0x021b0040, 0x00000047, // 0x00000047 0x00000027
+	0x021b0000, 0x841a0000, // 0x841a0000 0x831A0000
 	0x021b001c, 0x04088032,
 	0x021b001c, 0x00008033,
 	0x021b001c, 0x00048031,
@@ -931,10 +871,10 @@ int board_fit_config_name_match(const char *name)
 		if (!strcmp(name, "imx6q-ds"))
 			return 0;
 	} else if (is_mx6dqp()) {
-		if (!strcmp(name, "imx6qp-sabresd"))
+		if (!strcmp(name, "imx6qp-ds"))
 			return 0;
 	} else if (is_mx6dl()) {
-		if (!strcmp(name, "imx6dl-sabresd"))
+		if (!strcmp(name, "imx6dl-ds"))
 			return 0;
 	}
 

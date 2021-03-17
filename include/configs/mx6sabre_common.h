@@ -34,6 +34,17 @@
 				"mmc write ${loadaddr} 0x2 ${fw_sz}; " \
 			"fi; "	\
 		"fi\0"
+
+#define UBOOT_UPDATE \
+	"uboot_hwpart=1\0" \
+	"uboot_blk=8a\0" \
+	"uboot_spl_blk=2\0" \
+	"set_blkcnt=setexpr blkcnt ${filesize} + 0x1ff && " \
+		"setexpr blkcnt ${blkcnt} / 0x200\0" \
+	"update_uboot=run set_blkcnt && mmc dev 2 ${uboot_hwpart} && " \
+		"mmc write ${loadaddr} ${uboot_blk} ${blkcnt}\0" \
+	"update_spl=run set_blkcnt && mmc dev 2 ${uboot_hwpart} && " \
+		"mmc write ${loadaddr} ${uboot_spl_blk} ${blkcnt}\0"
 #else
 #define EMMC_ENV ""
 #endif
@@ -70,6 +81,7 @@
 			"fi; "	\
 		"fi\0" \
 	EMMC_ENV	  \
+	UBOOT_UPDATE \
 	"mmcargs=setenv bootargs console=${console},${baudrate} " \
 		"root=PARTUUID=${uuid} rootwait rw\0" \
 	"loadbootscript=" \
@@ -132,6 +144,8 @@
 					"setenv fdtfile imx6q-sabresd.dtb; fi; " \
 				"if test $board_name = SABRESD && test $board_rev = MX6DL; then " \
 					"setenv fdtfile imx6dl-sabresd.dtb; fi; " \
+				"if test $board_name = DS && test $board_rev = MX6Q; then " \
+					"setenv fdtfile imx6q-ds.dtb; fi; " \
 				"if test $fdtfile = undefined; then " \
 					"echo WARNING: Could not determine dtb to use; fi; " \
 			"fi;\0" \
