@@ -47,17 +47,40 @@ static struct module_pin_mux mmc0_pin_mux[] = {
 	{-1},
 };
 
-static struct module_pin_mux rmii1_pin_mux[] = {
-	{OFFSET(mii1_crs), MODE(1) | RXACTIVE},		/* RMII1_CRS */
-	{OFFSET(mii1_rxerr), MODE(1) | RXACTIVE},	/* RMII1_RXERR */
-	{OFFSET(mii1_txen), MODE(1)},			/* RMII1_TXEN */
-	{OFFSET(mii1_txd1), MODE(1)},			/* RMII1_TXD1 */
-	{OFFSET(mii1_txd0), MODE(1)},			/* RMII1_TXD0 */
-	{OFFSET(mii1_rxd1), MODE(1) | RXACTIVE},	/* RMII1_RXD1 */
-	{OFFSET(mii1_rxd0), MODE(1) | RXACTIVE},	/* RMII1_RXD0 */
-	{OFFSET(mdio_data), MODE(0) | RXACTIVE | PULLUP_EN}, /* MDIO_DATA */
+static struct module_pin_mux nand_pin_mux[] = {
+	{OFFSET(gpmc_ad0),	(MODE(0) | PULLUDDIS | RXACTIVE)}, /* AD0  */
+	{OFFSET(gpmc_ad1),	(MODE(0) | PULLUDDIS | RXACTIVE)}, /* AD1  */
+	{OFFSET(gpmc_ad2),	(MODE(0) | PULLUDDIS | RXACTIVE)}, /* AD2  */
+	{OFFSET(gpmc_ad3),	(MODE(0) | PULLUDDIS | RXACTIVE)}, /* AD3  */
+	{OFFSET(gpmc_ad4),	(MODE(0) | PULLUDDIS | RXACTIVE)}, /* AD4  */
+	{OFFSET(gpmc_ad5),	(MODE(0) | PULLUDDIS | RXACTIVE)}, /* AD5  */
+	{OFFSET(gpmc_ad6),	(MODE(0) | PULLUDDIS | RXACTIVE)}, /* AD6  */
+	{OFFSET(gpmc_ad7),	(MODE(0) | PULLUDDIS | RXACTIVE)}, /* AD7  */
+	{OFFSET(gpmc_wait0),	(MODE(0) | PULLUP_EN | RXACTIVE)}, /* nWAIT */
+	{OFFSET(gpmc_wpn),	(MODE(7) | PULLUP_EN)},		   /* nWP */
+	{OFFSET(gpmc_csn0),	(MODE(0) | PULLUP_EN)},		   /* nCS */
+	{OFFSET(gpmc_wen),	(MODE(0) | PULLDOWN_EN)},	   /* WEN */
+	{OFFSET(gpmc_oen_ren),	(MODE(0) | PULLDOWN_EN)},	   /* OE */
+	{OFFSET(gpmc_advn_ale),	(MODE(0) | PULLDOWN_EN)},	   /* ADV_ALE */
+	{OFFSET(gpmc_be0n_cle),	(MODE(0) | PULLDOWN_EN)},	   /* BE_CLE */
+	{-1},
+};
+
+static struct module_pin_mux rgmii1_pin_mux[] = {
+	{OFFSET(mii1_txen), MODE(2)},			/* RGMII1_TCTL */
+	{OFFSET(mii1_rxdv), MODE(2) | RXACTIVE},	/* RGMII1_RCTL */
+	{OFFSET(mii1_txd3), MODE(2)},			/* RGMII1_TD3 */
+	{OFFSET(mii1_txd2), MODE(2)},			/* RGMII1_TD2 */
+	{OFFSET(mii1_txd1), MODE(2)},			/* RGMII1_TD1 */
+	{OFFSET(mii1_txd0), MODE(2)},			/* RGMII1_TD0 */
+	{OFFSET(mii1_txclk), MODE(2)},			/* RGMII1_TCLK */
+	{OFFSET(mii1_rxclk), MODE(2) | RXACTIVE},	/* RGMII1_RCLK */
+	{OFFSET(mii1_rxd3), MODE(2) | RXACTIVE},	/* RGMII1_RD3 */
+	{OFFSET(mii1_rxd2), MODE(2) | RXACTIVE},	/* RGMII1_RD2 */
+	{OFFSET(mii1_rxd1), MODE(2) | RXACTIVE},	/* RGMII1_RD1 */
+	{OFFSET(mii1_rxd0), MODE(2) | RXACTIVE},	/* RGMII1_RD0 */
+	{OFFSET(mdio_data), MODE(0) | RXACTIVE | PULLUP_EN},/* MDIO_DATA */
 	{OFFSET(mdio_clk), MODE(0) | PULLUP_EN},	/* MDIO_CLK */
-	{OFFSET(rmii1_refclk), MODE(0) | RXACTIVE},	/* RMII1_REFCLK */
 	{-1},
 };
 
@@ -66,8 +89,9 @@ static void enable_board_pin_mux(void)
 	chilisom_enable_pin_mux();
 
 	/* chiliboard pinmux */
-	configure_module_pin_mux(rmii1_pin_mux);
+	configure_module_pin_mux(rgmii1_pin_mux);
 	configure_module_pin_mux(mmc0_pin_mux);
+	configure_module_pin_mux(nand_pin_mux);
 }
 #endif /* CONFIG_SKIP_LOWLEVEL_INIT */
 
