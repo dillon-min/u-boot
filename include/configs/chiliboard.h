@@ -23,7 +23,7 @@
 		"${mtdparts} " \
 		"root=${nandroot} " \
 		"rootfstype=${nandrootfstype}\0" \
-	"nandroot=ubi0:rootfs rw ubi.mtd=NAND.file-system\0" \
+	"nandroot=ubi0:rootfs rw ubi.mtd=NAND.file-system,4096\0" \
 	"nandrootfstype=ubifs rootwait=1\0" \
 	"nandboot=echo Booting from nand ...; " \
 		"run nandargs; " \
@@ -40,7 +40,7 @@
 	"loadaddr=0x82000000\0" \
 	"fdt_addr=0x87800000\0" \
 	"boot_fdt=try\0" \
-	"console=ttyO0,115200n8\0" \
+	"console=ttyS0,115200n8\0" \
 	"image=zImage\0" \
 	"fdt_file=" CONFIG_DEFAULT_FDT_FILE "\0" \
 	"ip_dyn=yes\0" \
@@ -181,7 +181,7 @@
 #define CONFIG_SYS_NAND_ECCSIZE		512
 #define CONFIG_SYS_NAND_ECCBYTES	26
 #endif
-#define CONFIG_SYS_NAND_U_BOOT_OFFS	0x000c0000
+#define CONFIG_SYS_NAND_U_BOOT_OFFS	0x00140000
 /* NAND: SPL related configs */
 
 /* USB configuration */
