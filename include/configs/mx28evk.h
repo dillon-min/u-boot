@@ -137,7 +137,7 @@
 	"nandboot="		/* Boot from NAND */ \
 		"mtdparts default; " \
 		"run nandargs; " \
-		"nand read ${loadaddr} kernel 0x00400000; " \
+		"nand read ${loadaddr} kernel 0x00600000;bootm ${loadaddr}; " \
 		"if test ${boot_fdt} = yes; then " \
 			"nand read ${fdt_addr} fdt 0x00080000; " \
 			"bootz ${loadaddr} - ${fdt_addr}; " \
@@ -160,7 +160,7 @@
 	"script=boot.scr\0"	\
 	"image=zImage\0" \
 	"console_fsl=ttyAM0\0" \
-	"console_mainline=ttyAMA0\0" \
+	"console_mainline=ttyAM0\0" \
 	"fdt_file=imx28-evk.dtb\0" \
 	"fdt_addr=0x41000000\0" \
 	"boot_fdt=try\0" \
