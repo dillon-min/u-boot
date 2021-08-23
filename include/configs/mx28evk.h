@@ -160,7 +160,7 @@
 	"script=boot.scr\0"	\
 	"image=zImage\0" \
 	"console_fsl=ttyAM0\0" \
-	"console_mainline=ttyAM0\0" \
+	"console_mainline=ttyAMA0\0" \
 	"fdt_file=imx28-evk.dtb\0" \
 	"fdt_addr=0x41000000\0" \
 	"boot_fdt=try\0" \
