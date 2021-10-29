@@ -12,6 +12,7 @@
 # define CONFIG_TIMESTAMP
 #endif
 
+#define CONFIG_SYS_BOOTM_LEN		SZ_32M
 /* Clock Defines */
 #define V_OSCK				24000000  /* Clock output from T2 */
 #define V_SCLK				(V_OSCK)
