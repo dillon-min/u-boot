@@ -137,7 +137,7 @@
 	"nandboot="		/* Boot from NAND */ \
 		"mtdparts default; " \
 		"run nandargs; " \
-		"nand read ${loadaddr} kernel 0x00600000;bootm ${loadaddr}; " \
+		"nand read ${loadaddr} kernel 0x00a00000;bootm ${loadaddr}; " \
 		"if test ${boot_fdt} = yes; then " \
 			"nand read ${fdt_addr} fdt 0x00080000; " \
 			"bootz ${loadaddr} - ${fdt_addr}; " \
@@ -164,6 +164,8 @@
 	"fdt_file=imx28-evk.dtb\0" \
 	"fdt_addr=0x41000000\0" \
 	"boot_fdt=try\0" \
+	"ipaddr=192.168.1.3\0" \
+	"serverip=192.168.1.2\0" \
 	"ip_dyn=yes\0" \
 	"mmcdev=0\0" \
 	"mmcpart=2\0" \

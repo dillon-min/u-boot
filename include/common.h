@@ -11,7 +11,7 @@
 
 #ifndef __COMMON_H_
 #define __COMMON_H_	1
-
+#define DEBUG 1
 #ifndef __ASSEMBLY__		/* put C only stuff in this section */
 #include <config.h>
 #include <errno.h>
