@@ -24,7 +24,10 @@ const iomux_cfg_t iomux_setup[] = {
 	/* DUART */
 	MX28_PAD_AUART0_CTS__DUART_RX,	
     	MX28_PAD_AUART0_RTS__DUART_TX,
-	/* MMC0 */
+	MX28_PAD_SSP0_DATA7__GPIO_2_7 |
+		(MXS_PAD_12MA | MXS_PAD_3V3 | MXS_PAD_PULLUP),
+#if 0
+		/* MMC0 */
 	MX28_PAD_SSP0_DATA0__SSP0_D0 | MUX_CONFIG_SSP0,
 	MX28_PAD_SSP0_DATA1__SSP0_D1 | MUX_CONFIG_SSP0,
 	MX28_PAD_SSP0_DATA2__SSP0_D2 | MUX_CONFIG_SSP0,
@@ -169,6 +172,7 @@ const iomux_cfg_t iomux_setup[] = {
 	MX28_PAD_LCD_CS__LCD_ENABLE | MUX_CONFIG_LCD,
 	MX28_PAD_LCD_RESET__GPIO_3_30 | MUX_CONFIG_LCD, /* LCD power */
 	MX28_PAD_PWM2__GPIO_3_18 | MUX_CONFIG_LCD, /* LCD contrast */
+#endif
 };
 
 #define HW_DRAM_CTL29	(0x74 >> 2)
@@ -187,5 +191,21 @@ void mxs_adjust_memory_params(uint32_t *dram_vals)
 
 void board_init_ll(const uint32_t arg, const uint32_t *resptr)
 {
+#define HW_PINCTRL_MUXSEL4_CLR 0x80018148
+#define HW_PINCTRL_MUXSEL4_SET 0x80018144
+#define HW_PINCTRL_DOUT2_SET 0x80018728
+	uint32_t led_mode = 0;
+	led_mode = __raw_readl(HW_PINCTRL_MUXSEL4_CLR);
+	led_mode = led_mode | 0xc000;
+	__raw_writel(HW_PINCTRL_MUXSEL4_CLR, led_mode);
+
+	led_mode = __raw_readl(HW_PINCTRL_MUXSEL4_SET);
+	led_mode = led_mode | 0xc000;
+	__raw_writel(HW_PINCTRL_MUXSEL4_SET, led_mode);
+	
+	led_mode = __raw_readl(HW_PINCTRL_DOUT2_SET);
+	led_mode = led_mode | 0x80;
+	__raw_writel(HW_PINCTRL_DOUT2_SET, led_mode);
+
 	mxs_common_spl_init(arg, resptr, iomux_setup, ARRAY_SIZE(iomux_setup));
 }
