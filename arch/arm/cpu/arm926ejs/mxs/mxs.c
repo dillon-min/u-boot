@@ -285,15 +285,7 @@ void imx_get_mac_from_fuse(int dev_id, unsigned char *mac)
 
 int mxs_dram_init(void)
 {
-	struct mxs_spl_data *data = MXS_SPL_DATA;
-	data->mem_dram_size = 64*1024*1024;
-	if (data->mem_dram_size == 0) {
-		printf("MXS:\n"
-			"Error, the RAM size passed up from SPL is 0!\n");
-		hang();
-	}
-
-	gd->ram_size = data->mem_dram_size;
+	gd->ram_size = PHYS_SDRAM_1_SIZE;
 	return 0;
 }
 

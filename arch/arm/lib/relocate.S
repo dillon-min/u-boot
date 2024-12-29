@@ -108,6 +108,7 @@ fixloop:
 fixnext:
 	cmp	r2, r3
 	blo	fixloop
+	bl red_led_on
 
 relocate_done:
 
