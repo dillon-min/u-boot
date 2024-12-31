@@ -273,7 +273,7 @@
 
 			duart: serial@80074000 {
 				pinctrl-names = "default";
-				pinctrl-0 = <&duart_pins_a>;
+				pinctrl-0 = <&duart_pins_b>;
 				status = "okay";
 			};
 
@@ -281,7 +281,7 @@
 				pinctrl-names = "default";
 				pinctrl-0 = <&auart0_pins_a>;
 				uart-has-rtscts;
-				status = "okay";
+				status = "disabled";
 			};
 
 			auart3: serial@80070000 {
