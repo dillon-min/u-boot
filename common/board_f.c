@@ -79,7 +79,7 @@ DECLARE_GLOBAL_DATA_PTR;
  * May be supplied by boards if desired
  */
 __weak void coloured_LED_init(void) {}
-__weak void red_led_on(void) { gpio_direction_output(MX28_PAD_SSP0_DATA7__GPIO_2_7, 0);}
+__weak void red_led_on(void) {}
 __weak void red_led_off(void) {}
 __weak void green_led_on(void) {}
 __weak void green_led_off(void) {}
