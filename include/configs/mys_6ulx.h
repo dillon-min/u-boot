@@ -41,8 +41,8 @@
 	BOOTENV
 
 #define BOOT_TARGET_DEVICES(func) \
+	func(UBIFS, ubifs, 0, ubi, boot) \
 	func(MMC, mmc, 0) \
-	func(UBIFS, ubifs, 0, UBI, boot) \
 	func(PXE, pxe, na) \
 	func(DHCP, dhcp, na)
 
